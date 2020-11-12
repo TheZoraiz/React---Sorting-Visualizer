@@ -10,7 +10,9 @@ function Array(props) {
     return (
         <div className='array-body'>
             <div className='array-container'>
-                {props.generateBars(10)}
+                {props.generateBars()}
+                {/* {props.generateBars(props.amount)} */}
+                {/* {props.generateBars(252)} */}
             </div>
         </div>
     );

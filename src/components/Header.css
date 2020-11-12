@@ -2,21 +2,25 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid white;
-    margin: 0;
+    /* border: 1px solid white; */
+    margin: 10;
 }
 
 .controls {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    border: 1px solid white;
+    /* border: 1px solid white; */
+}
+
+.controls h3 {
+    margin-left: 3%;
+    margin-right: 3%;
 }
 
 .sorts {
     cursor: pointer;
     /* background-color: red; */
-    padding: 100;
 }
 
 .sorts:hover {
