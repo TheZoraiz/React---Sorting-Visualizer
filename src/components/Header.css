@@ -1,9 +1,9 @@
-.nav-bar {
+.title {
     display: flex;
     justify-content: center;
     align-items: center;
     /* border: 1px solid white; */
-    margin: 10;
+    margin: 10px;
 }
 
 .controls {
@@ -20,9 +20,27 @@
 
 .sorts {
     cursor: pointer;
+    padding: 10px;
+    margin: 0;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    box-shadow: 0 0 5px gray;
+    outline:none;
     /* background-color: red; */
 }
 
 .sorts:hover {
+    background-color: gray;
+    box-shadow: 0 0 30px gray;
+}
+
+#chosen {
+    font-size: 30px;
+    text-align: center;
+    margin: 0;
+    margin-top: 10px;
     color: blue;
+    font-weight: bolder;
+    text-shadow: 0 0 5px;
 }
