@@ -24,6 +24,7 @@ function Array(props) {
     const [ speed, setSpeed ] = useState(1);
     const [ clickable, setClickable ] = useState(true);
     const [ reload, setReload ] = useState(false)
+    let sortHistory = []
 
     // Converts array of divs into an array of their sizes - in order
     // realList = realList.map(item => parseFloat(item.style.height.slice(0, item.style.height.length - 2)));
@@ -51,8 +52,8 @@ function Array(props) {
 
 
     const bubble_Sort = () => {
-        let list = document.getElementsByClassName('array-container')[0];
-        let realList = list.children;
+        // let list = document.getElementsByClassName('array-container')[0];
+        // let realList = list.children;
         // console.log(realList)
         // console.log(realList)
         // let x = parseFloat(realList[0].style.height.slice(0, realList[0].style.height.length - 2));
@@ -60,10 +61,9 @@ function Array(props) {
         // console.log(x < y);
         
         let count = 50;
-        let sortHistory = []
 
         let swapp;
-        let n = realList.length-1;
+        let n = array.length - 1;
         // var x=[...realList];
         let x = [...array];
         swapp = true;
@@ -210,12 +210,12 @@ function Array(props) {
                         id='range'
                         type='range'
                         style={{width: 220}}
-                        min={1} max={300}
+                        min={1} max={400}
                         value={speed} 
                         onChange={changeSpeed}
                     />
                 </div>
-                <button className='generator' onClick={generate}>Generate New Array</button>
+
                 <button className='sort-button' onClick={() => {
                     if(clickable) {
                         check();
@@ -225,7 +225,9 @@ function Array(props) {
                     
                     }}>Sort !</button>
                     
-                <button className='sort-button' onClick={forceUpdate}>Stop</button>
+                <button className='generator' onClick={generate}>Generate New Array</button>
+
+                <button className='sort-button' onClick={() => window.location.reload()}>Reset / Stop</button>
             </div>
             <div className='array-container'>
                 {array}
