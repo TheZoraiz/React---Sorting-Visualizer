@@ -1,46 +1,53 @@
-const mergeSort = (arr) => {
+const mergeSort = (arr, passedI, passedJ) => {
     if(arr.length == 1) return arr;
 
     let mid = Math.floor(arr.length / 2);
+    let passedMid = Math.floor((passedI + passedJ) / 2);
 
-    let firstHalf = mergeSort(arr.slice(0, mid));
-    let secondHalf = mergeSort(arr.slice(mid));
+    let firstHalf = mergeSort(arr.slice(0, mid), passedI, passedMid);
+    let secondHalf = mergeSort(arr.slice(mid), passedMid, passedJ);
+
+    // The Merge Part
 
     let sorted = [];
 
     let i = 0, j = 0;
 
+    let tempCount = 0;
+    console.log(passedI, passedJ);
     while(i < firstHalf.length && j < secondHalf.length) {
-        if(firstHalf[i] < secondHalf[j]) 
-            sorted.push(firstHalf[i++])
-        else 
-            sorted.push(secondHalf[j++])
+        if(firstHalf[i] < secondHalf[j]) {
+            sorted.push(firstHalf[i++]);
+            // console.log(firstHalf[i]);
+            outsider[passedI + (tempCount++)] = firstHalf[i - 1];
+            collector.push([...outsider]);
+        } else {
+            sorted.push(secondHalf[j++]);
+            // console.log(secondHalf[j]);
+            outsider[passedI + (tempCount++)] = secondHalf[j - 1];
+            collector.push([...outsider]);
+        }
+        // console.log(outsider);
     }
-    while(i < firstHalf.length) sorted.push(firstHalf[i++]);
-    while(j < secondHalf.length) sorted.push(secondHalf[j++]);
-    console.log(sorted);
+    while(i < firstHalf.length) {
+        sorted.push(firstHalf[i++]);
+        outsider[passedI + (tempCount++)] = firstHalf[i - 1];
+        collector.push([...outsider]);
+    };
+    while(j < secondHalf.length) {
+        sorted.push(secondHalf[j++]);
+        outsider[passedI + (tempCount++)] = secondHalf[j - 1];
+        collector.push([...outsider]);
+    };
+    // console.log(passedI, passedJ);
+    // console.log(outsider);
     return sorted;
 }
 
-const insertionSort = (x) => {
-    let n = x.length;
+let arr = [4, 3, 2, 1];
+let collector = [];
+let outsider = [...arr]
 
-    for (let i = 1; i < n; i++) {
-        
-        let current = x[i];
-        
-        let j = i-1; 
-        while ((j > -1) && (current < x[j])) {
-            x[j+1] = x[j];
-            j--;
-        }
-        x[j+1] = current;
-    }
-
-    return x;
-}
-
-let arr = [12, 345, 4, 546, 122, 84, 98, 64, 9, 1, 3223, 455, 23, 234, 213]
 console.log(arr);
-// console.log(mergeSort(arr, 0, arr.length - 1));
-console.log(insertionSort(arr));
+console.log('\n', mergeSort(arr, 0, arr.length - 1));
+console.log('Collector: ', collector);

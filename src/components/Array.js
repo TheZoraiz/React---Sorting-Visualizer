@@ -1,11 +1,16 @@
 import './Array.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+
+
+// Used for mergeSort()'s logic
+let outsider = [];
 
 function Array(props) {
     const [ rangeVal, setVal ] = useState(20);
     const [ speed, setSpeed ] = useState(1);
     const [ clickable, setClickable ] = useState(true);
-
+    
+    let checkOutsider = true;
     let sortHistory = [];
     let interval = undefined;
 
@@ -106,8 +111,63 @@ function Array(props) {
         }
     }
 
-    const mergeSort = () => {
-        
+
+    const mergeSort = (arr, passedI, passedJ) => {
+        if(arr.length == 1) return arr;
+    
+        let mid = Math.floor(arr.length / 2);
+        let passedMid = Math.floor((passedI + passedJ) / 2);
+    
+        let firstHalf = mergeSort(arr.slice(0, mid), passedI, passedMid);
+        let secondHalf = mergeSort(arr.slice(mid), passedMid, passedJ);
+    
+        // The Merge Part
+    
+        let sorted = [];
+    
+        let i = 0, j = 0;
+    
+        let tempCount = 0;
+        while(i < firstHalf.length && j < secondHalf.length) {
+            // firstHalf[i] = changeElementColor(firstHalf[i], 'green');
+            // secondHalf[j] = changeElementColor(secondHalf[j], 'red');
+
+            if(firstHalf[i].props.style.height < secondHalf[j].props.style.height) {
+
+                // firstHalf[i] = changeElementColor(firstHalf[i], 'green');
+                sorted.push(firstHalf[i++]);
+                outsider[passedI + (tempCount++)] = firstHalf[i - 1];
+                sortHistory.push([...outsider]);
+                // firstHalf[i] = changeElementColor(firstHalf[i - 1], 'turquoise');
+                
+            } else {
+
+                sorted.push(secondHalf[j++]);
+                outsider[passedI + (tempCount++)] = secondHalf[j - 1];
+                sortHistory.push([...outsider]);
+
+            }
+            // secondHalf[j] = changeElementColor(secondHalf[j - 1], 'turquoise');
+            // firstHalf[i] = changeElementColor(firstHalf[i], 'turquoise');
+            // console.log(outsider);
+        }
+        while(i < firstHalf.length) {
+            // firstHalf[i] = changeElementColor(firstHalf[i], 'green');
+
+            sorted.push(firstHalf[i++]);
+            outsider[passedI + (tempCount++)] = firstHalf[i - 1];
+            sortHistory.push([...outsider]);
+        };
+        while(j < secondHalf.length) {
+            // secondHalf[j] = changeElementColor(secondHalf[j], 'green');
+
+            sorted.push(secondHalf[j++]);
+            outsider[passedI + (tempCount++)] = secondHalf[j - 1];
+            sortHistory.push([...outsider]);
+        };
+        // console.log(passedI, passedJ);
+        // console.log(outsider);
+        return sorted;
     }
 
     const quickSort = () => {
@@ -139,7 +199,12 @@ function Array(props) {
                 break;
             
             case 'Merge Sort':
-                mergeSort();
+                outsider = [];
+                // outsider = [...array];
+                let tempArr = [...array];
+                mergeSort(tempArr, 0, tempArr.length - 1);
+                // console.log(outsider);
+                outsider = [];
                 break;
 
             case 'Quick Sort':
@@ -154,6 +219,7 @@ function Array(props) {
     }
 
     const showHistory = () => {
+        console.log(outsider);
         let c = 0;
         if(sortHistory.length != 0) {
             interval = setInterval(() => {
