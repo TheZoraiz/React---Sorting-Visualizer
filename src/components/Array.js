@@ -1,34 +1,13 @@
 import './Array.css';
 import React, { useState, useEffect } from 'react';
 
-
-function sleep(millis)
-{
-    var date = new Date();
-    var curDate = null;
-    do { curDate = new Date(); }
-    while(curDate-date < millis);
-}
-
-
-function useForceUpdate(){
-    const [value, setValue] = useState(0); // integer state
-    return () => setValue(value => ++value); // update the state to force render
-}
-  
-
-
 function Array(props) {
-    const forceUpdate = useForceUpdate();
     const [ rangeVal, setVal ] = useState(20);
     const [ speed, setSpeed ] = useState(1);
     const [ clickable, setClickable ] = useState(true);
-    const [ reload, setReload ] = useState(false)
-    let sortHistory = []
 
-    // Converts array of divs into an array of their sizes - in order
-    // realList = realList.map(item => parseFloat(item.style.height.slice(0, item.style.height.length - 2)));
-    // console.log(realList);
+    let sortHistory = [];
+    let interval = undefined;
 
     const generateArray = (count) => {
         count = parseInt(count);
@@ -51,17 +30,7 @@ function Array(props) {
     const [ array, setArray ] = useState(generateArray(rangeVal));
 
 
-    const bubble_Sort = () => {
-        // let list = document.getElementsByClassName('array-container')[0];
-        // let realList = list.children;
-        // console.log(realList)
-        // console.log(realList)
-        // let x = parseFloat(realList[0].style.height.slice(0, realList[0].style.height.length - 2));
-        // let y = parseFloat(realList[1].style.height.slice(0, realList[1].style.height.length - 2));
-        // console.log(x < y);
-        
-        let count = 50;
-
+    const bubbleSort = () => {
         let swapp;
         let n = array.length - 1;
         // var x=[...realList];
@@ -79,46 +48,29 @@ function Array(props) {
                 let b = x[i+1].props.style.height;
 
                 // Highlight the iterators
-                x[i] = React.cloneElement(x[i], {
-                    style: {
-                        ...x[i].props.style,
-                        backgroundColor: 'green'
-                    }
-                });
-                
-                x[i+1] = React.cloneElement(x[i+1], {
-                    style: {
-                        ...x[i+1].props.style,
-                        backgroundColor: 'red'
-                    }
-                });
+                x[i] = changeElementColor(x[i], 'green');
+                x[i+1] = changeElementColor(x[i+1], 'green');
 
                 // Swapping condition for BUBBLE SORT
                 if (a > b) {
+                    x[i] = changeElementColor(x[i], 'red');
+                    x[i+1] = changeElementColor(x[i+1], 'red');
+
                     sortHistory.push([...x]);
                     let temp = x[i];
                     x[i] = x[i+1];
                     x[i+1] = temp;
                     swapp = true;     
+
+                    x[i] = changeElementColor(x[i], 'green');
+                    x[i+1] = changeElementColor(x[i+1], 'green');
                     sortHistory.push([...x]);
                 } else {
                     sortHistory.push([...x]);
                 }
 
-                // Unhighlight the iterators
-                x[i] = React.cloneElement(x[i], {
-                    style: {
-                        ...x[i].props.style,
-                        backgroundColor: 'turquoise',
-                    }
-                });
-
-                x[i+1] = React.cloneElement(x[i+1], {
-                    style: {
-                        ...x[i+1].props.style,
-                        backgroundColor: 'turquoise',
-                    }
-                });
+                x[i] = changeElementColor(x[i], 'turquoise');
+                x[i+1] = changeElementColor(x[i+1], 'turquoise');
 
                 if(!swapp)
                     sortHistory.push([...x]);
@@ -128,38 +80,38 @@ function Array(props) {
         }        
 
         console.log(sortHistory);
-        let c = 0;
+    }
 
-        let interval = setInterval(() => {
-            if(c < sortHistory.length - 1 && !reload)
-                c++;
-            else {
-                clearInterval(interval);
-                setClickable(true);
-                setReload(false);
+    const insertionSort = () => {
+        let x = [...array];
+        let n = x.length;
+        for (let i = 1; i < n; i++) {
+            // Choosing the first element in our unsorted subarray
+            x[i] = changeElementColor(x[i], 'red');
+            let current = x[i];
+            sortHistory.push([...x]);
+            // The last element of our sorted subarray
+            let j = i-1; 
+            
+            while ((j > -1) && (current.props.style.height < x[j].props.style.height)) {
+                x[j+1] = x[j];
+                // x[j+1] = changeElementColor(x[j+1], 'red');
+                j--;
             }
-            iterate([...sortHistory[c]]);
-        }, speed);
+            x[j+1] = current;
+            x[j+1] = changeElementColor(x[j+1], 'green');
+            sortHistory.push([...x]);
+            x[j+1] = changeElementColor(x[j+1], 'turquoise');
+            sortHistory.push([...x]);
+        }
+    }
+
+    const mergeSort = () => {
         
     }
 
-    const updateView = (i) => {
-        document.getElementsByClassName('array-container')[0].appendChild(i);
-    }
+    const quickSort = () => {
 
-    // useEffect(() => {
-    //     array = generateArray(props.count);
-    // })
-
-    const newArray = (newArray) => {
-        setArray([...newArray]);
-        // let bars = []
-        // document.getElementsByClassName("array-container")[0].innerHTML = '';
-        // newArray.forEach(element => {
-        //     document.getElementsByClassName("array-container")[0].appendChild(element);
-            
-        //     // console.log(element);
-        // });
     }
 
     const generate = () => {
@@ -167,25 +119,62 @@ function Array(props) {
     }
     
     const changeVal = (event) => {
-        generate();
         setVal(event.target.value);
+        generate();
     }
 
     const changeSpeed = (event) => {
         setSpeed(event.target.value);
     }
 
-    const check = () => {
-        bubble_Sort();
-    }
+    const sortIt = (chosenSort) => {
+        sortHistory = [];
+        switch(chosenSort) {
+            case 'Bubble Sort':
+                bubbleSort();
+                break;
+            
+            case 'Insertion Sort':
+                insertionSort();
+                break;
+            
+            case 'Merge Sort':
+                mergeSort();
+                break;
 
-    const reloader = () => {
-        console.log(reload);
-        setReload(true);
+            case 'Quick Sort':
+                quickSort();
+                break;
+        }
+        showHistory();
     }
 
     const iterate = arr => {
         setArray([...arr]);
+    }
+
+    const showHistory = () => {
+        let c = 0;
+        if(sortHistory.length != 0) {
+            interval = setInterval(() => {
+                if(c < sortHistory.length - 1)
+                    c++;
+                else {
+                    clearInterval(interval);
+                    setClickable(true);
+                }
+                iterate([...sortHistory[c]]);
+            }, speed);
+        }
+    }
+
+    const changeElementColor = (element, color) => {
+        return React.cloneElement(element, {
+            style: {
+                ...element.props.style,
+                backgroundColor: color
+            }
+        });
     }
 
     return (
@@ -193,7 +182,7 @@ function Array(props) {
             <div id='texts'>
                 <div id='texts'>
                 <div>
-                    <p>Number of elements: {rangeVal}</p>
+                    <p style={{textAlign: 'center'}}>Number of elements: <br></br> {rangeVal}</p>
                     <input
                         id='range'
                         type='range'
@@ -205,20 +194,19 @@ function Array(props) {
                 </div>
                 
                  <div style={{margin: '0 40px'}}>
-                    <p>Swap time: {speed} milliseconds</p>
+                    <p style={{fontSize: 17, textAlign: 'center'}}>Sorting Speed:<br></br> 1 swap every {Math.round(speed / 2)} milliseconds</p>
                     <input
-                        id='range'
+                        id='rangeSpeed'
                         type='range'
-                        style={{width: 220}}
-                        min={1} max={400}
+                        min={1} max={500}
                         value={speed} 
                         onChange={changeSpeed}
                     />
                 </div>
 
-                <button className='sort-button' onClick={() => {
+                <button className='sort-button' style={{fontWeight: 'bold', fontSize: 25}} onClick={() => {
                     if(clickable) {
-                        check();
+                        sortIt(props.chosenSort);
                     } else {
                         generate();
                     }

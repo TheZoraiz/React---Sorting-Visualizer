@@ -9,28 +9,14 @@ function useForceUpdate(){
 }
 
 function App() {
-  const forceUpdate = useForceUpdate();
   const [chosenSort, setSort] = useState('Bubble Sort');
 
   return (
     <div className="App">
 
-      <Header chooseSort={setSort}/>
-
-      <div className='controls' style={{justifyContent: 'center'}}>
-        <div id='texts'>
-          {/* <p>Number of elements: {rangeVal}</p>
-          <input
-            id='range'
-            type='range'
-            min={20} max={250}
-            value={rangeVal} 
-            onChange={changeVal}
-            /> */}
-        </div>
-      </div>
-
-      <Array />
+      <Header setSort={setSort}/>
+      
+      <Array chosenSort={chosenSort}/>
 
     </div>
   );

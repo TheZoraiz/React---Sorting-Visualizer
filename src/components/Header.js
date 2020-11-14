@@ -6,13 +6,29 @@ function Header(props) {
 
     return (
         <div>
-            <h1 className="title">Sorting Visualizer</h1>
+            <h1 className="title">Sorting Algorithm Visualizer</h1>
+            <p className='daddy'>By Zoraiz</p>
             
             <div className='controls'>
-                <h3 className='sorts' onClick={() => setSort('Bubble Sort')}>Bubble Sort</h3>
-                <h3 className='sorts' onClick={() => setSort('Insertion Sort')}>Insertion Sort</h3>
-                <h3 className='sorts' onClick={() => setSort('Merge Sort')}>Merge Sort</h3>
-                <h3 className='sorts' onClick={() => setSort('Quick Sort')}>Quick Sort</h3>
+                <h3 className='sorts' onClick={() => {
+                    setSort('Bubble Sort');
+                    props.setSort('Bubble Sort');
+                }}>Bubble Sort</h3>
+
+                <h3 className='sorts' onClick={() => {
+                    setSort('Insertion Sort');
+                    props.setSort('Insertion Sort');
+                }}>Insertion Sort</h3>
+
+                <h3 className='sorts' onClick={() => {
+                    setSort('Merge Sort');
+                    props.setSort('Merge Sort');
+                }}>Merge Sort</h3>
+
+                <h3 className='sorts' onClick={() => {
+                    setSort('Quick Sort');
+                    props.setSort('Quick Sort');
+                }}>Quick Sort</h3>
             </div>
             
             <p id='chosen'>{chosenSort}</p>

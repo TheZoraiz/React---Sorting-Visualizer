@@ -29,3 +29,9 @@ body {
   box-shadow: 0 0 5px 5px white;
   width: 190px;
 }
+
+#rangeSpeed {
+  box-shadow: 0 0 5px 5px white;
+  width: 230px;
+  transform: rotate(180deg);
+}
