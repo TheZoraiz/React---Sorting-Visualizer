@@ -9,14 +9,16 @@ function useForceUpdate(){
 }
 
 function App() {
-  const [chosenSort, setSort] = useState('Bubble Sort');
+  const [ chosenSort, setSort ] = useState('Bubble Sort');
+  const [ warning, setWarning ] = useState('red')
 
   return (
     <div className="App">
 
       <Header setSort={setSort}/>
-      
-      <Array chosenSort={chosenSort}/>
+      <p id='merge-warning' style={{display: 'block', color: warning, textAlign: 'center'}}>(Warning: Merge Sort is best visualized on large arrays with fast speeds due to its recursive nature)</p>
+
+      <Array chosenSort={chosenSort} warn={setWarning}/>
 
     </div>
   );

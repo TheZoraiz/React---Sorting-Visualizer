@@ -9,16 +9,20 @@ function Array(props) {
     const [ rangeVal, setVal ] = useState(20);
     const [ speed, setSpeed ] = useState(1);
     const [ clickable, setClickable ] = useState(true);
-    
-    let checkOutsider = true;
+
     let sortHistory = [];
     let interval = undefined;
+
+    if(props.chosenSort == 'Merge Sort')
+        props.warn('red');
+    else
+        props.warn('black');
 
     const generateArray = (count) => {
         count = parseInt(count);
         let bars = [];
         for(let i = 0; i < count; i++) {
-            let barHeight = Math.round((Math.random() * 900) + 50);
+            let barHeight = Math.round((Math.random() * 850) + 50);
             let barWidth = (count > 25 ? ( 1000 / ( count + 5  ) ) : 30);
             bars.push(
                 <div 
@@ -37,7 +41,6 @@ function Array(props) {
     const bubbleSort = () => {
         let swapp;
         let n = array.length - 1;
-        // var x=[...realList];
         let x = [...array];
         swapp = true;
 
@@ -45,9 +48,6 @@ function Array(props) {
             swapp = false;
             for (let i = 0; i < n; i++)
             {
-                // let a = parseFloat(x[i].style.height.slice(0, x[i].style.height.length - 2));
-                // let b = parseFloat(x[i+1].style.height.slice(0, x[i+1].style.height.length - 2));
-
                 let a = x[i].props.style.height;
                 let b = x[i+1].props.style.height;
 
@@ -108,7 +108,6 @@ function Array(props) {
             }
             x[j+1] = current;
             x[j+1] = changeElementColor(x[j+1], 'green');
-            sortHistory.push([...x]);
             sortHistory.push([...x]);
             x[j+1] = changeElementColor(x[j+1], 'turquoise');
             sortHistory.push([...x]);
@@ -191,6 +190,52 @@ function Array(props) {
         return sorted;
     }
 
+    const selectionSort = () => { 
+        let n = array.length;
+        let x = [...array];
+            
+        for(let i = 0; i < n; i++) {
+            // Finding the smallest number in the subarray
+            let min = i;
+            for(let j = i+1; j < n; j++){
+                x[j] = changeElementColor(x[j], 'green');
+                x[min] = changeElementColor(x[min], 'green');
+                sortHistory.push([...x]);
+
+                if(x[j].props.style.height < x[min].props.style.height) {
+
+                    x[j] = changeElementColor(x[j], 'red');
+                    x[min] = changeElementColor(x[min], 'red');
+                    sortHistory.push([...x]);
+                    
+                    let old = min;
+                    min=j; 
+                    
+                    x[old] = changeElementColor(x[old], 'turquoise');
+                    sortHistory.push([...x]);
+                    continue;
+                }
+                
+                x[j] = changeElementColor(x[j], 'turquoise');
+                x[min] = changeElementColor(x[min], 'turquoise');
+                sortHistory.push([...x]);
+
+             }
+             if (min != i) {
+                 // Swapping the elements
+                x[i] = changeElementColor(x[i], 'green');
+                x[min] = changeElementColor(x[min], 'green');
+                sortHistory.push([...x]);
+                let tmp = x[i]; 
+                x[i] = x[min];
+                x[min] = tmp;      
+                x[i] = changeElementColor(x[i], 'turquoise');
+                x[min] = changeElementColor(x[min], 'turquoise');
+                sortHistory.push([...x]);
+            }
+        }
+    }
+
     const quickSort = () => {
 
     }
@@ -211,9 +256,14 @@ function Array(props) {
     const sortIt = (chosenSort) => {
         setClickable(false);
         sortHistory = [];
+
         switch(chosenSort) {
             case 'Bubble Sort':
                 bubbleSort();
+                break;
+
+            case 'Selection Sort':
+                selectionSort();
                 break;
             
             case 'Insertion Sort':
@@ -233,6 +283,7 @@ function Array(props) {
                 quickSort();
                 break;
         }
+
         showHistory();
     }
 
@@ -281,7 +332,7 @@ function Array(props) {
                 </div>
                 
                  <div style={{margin: '0 40px'}}>
-                    <p style={{fontSize: 17, textAlign: 'center'}}>Sorting Speed:<br></br> 1 swap every {Math.round(speed / 2)} milliseconds</p>
+                    <p style={{fontSize: 17, textAlign: 'center'}}><b>Sorting Speed</b>:<br></br> Depends upon your CPU as well</p>
                     <input
                         id='rangeSpeed'
                         type='range'
@@ -290,7 +341,7 @@ function Array(props) {
                         onChange={changeSpeed}
                     />
                 </div>
-
+                
                 <button className='sort-button' style={{fontWeight: 'bold', fontSize: 25}} onClick={() => {
                     if(clickable) sortIt(props.chosenSort);
                 }}>Sort !</button>

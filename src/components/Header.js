@@ -14,6 +14,11 @@ function Header(props) {
                     setSort('Bubble Sort');
                     props.setSort('Bubble Sort');
                 }}>Bubble Sort</h3>
+                
+                <h3 className='sorts' onClick={() => {
+                    setSort('Selection Sort');
+                    props.setSort('Selection Sort');
+                }}>Selection Sort</h3>
 
                 <h3 className='sorts' onClick={() => {
                     setSort('Insertion Sort');
@@ -25,10 +30,10 @@ function Header(props) {
                     props.setSort('Merge Sort');
                 }}>Merge Sort</h3>
 
-                <h3 className='sorts' onClick={() => {
+                {/* <h3 className='sorts' onClick={() => {
                     setSort('Quick Sort');
                     props.setSort('Quick Sort');
-                }}>Quick Sort</h3>
+                }}>Quick Sort</h3> */}
             </div>
             
             <p id='chosen'>{chosenSort}</p>
