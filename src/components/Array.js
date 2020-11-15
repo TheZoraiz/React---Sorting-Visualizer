@@ -7,8 +7,9 @@ let outsider = [];
 
 function Array(props) {
     const [ rangeVal, setVal ] = useState(20);
-    const [ speed, setSpeed ] = useState(1);
+    const [ speed, setSpeed ] = useState(500);
     const [ clickable, setClickable ] = useState(true);
+    console.log(500 - speed);
 
     let sortHistory = [];
     let interval = undefined;
@@ -302,7 +303,7 @@ function Array(props) {
                     setClickable(true);
                 }
                 iterate([...sortHistory[c]]);
-            }, speed);
+            }, 500 - speed);
         }
     }
 
