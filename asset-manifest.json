@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/React-Sorting-Algorithm-Visualizer/static/css/main.4a9f4073.chunk.css",
+    "main.js": "/React-Sorting-Algorithm-Visualizer/static/js/main.c52ae4fb.chunk.js",
+    "main.js.map": "/React-Sorting-Algorithm-Visualizer/static/js/main.c52ae4fb.chunk.js.map",
+    "runtime-main.js": "/React-Sorting-Algorithm-Visualizer/static/js/runtime-main.7d2c19b7.js",
+    "runtime-main.js.map": "/React-Sorting-Algorithm-Visualizer/static/js/runtime-main.7d2c19b7.js.map",
+    "static/js/2.17d5df04.chunk.js": "/React-Sorting-Algorithm-Visualizer/static/js/2.17d5df04.chunk.js",
+    "static/js/2.17d5df04.chunk.js.map": "/React-Sorting-Algorithm-Visualizer/static/js/2.17d5df04.chunk.js.map",
+    "static/js/3.80c7e5a1.chunk.js": "/React-Sorting-Algorithm-Visualizer/static/js/3.80c7e5a1.chunk.js",
+    "static/js/3.80c7e5a1.chunk.js.map": "/React-Sorting-Algorithm-Visualizer/static/js/3.80c7e5a1.chunk.js.map",
+    "index.html": "/React-Sorting-Algorithm-Visualizer/index.html",
+    "static/css/main.4a9f4073.chunk.css.map": "/React-Sorting-Algorithm-Visualizer/static/css/main.4a9f4073.chunk.css.map",
+    "static/js/2.17d5df04.chunk.js.LICENSE.txt": "/React-Sorting-Algorithm-Visualizer/static/js/2.17d5df04.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7d2c19b7.js",
+    "static/js/2.17d5df04.chunk.js",
+    "static/css/main.4a9f4073.chunk.css",
+    "static/js/main.c52ae4fb.chunk.js"
+  ]
+}
