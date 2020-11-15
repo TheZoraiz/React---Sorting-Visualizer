@@ -24,7 +24,6 @@ function Array(props) {
                 <div 
                   className='bars'
                   style={{height: barHeight/2, width: barWidth, margin: 1}}
-                  key={i}
                 >
                   { count < 40 ? <p>{ barHeight }</p> : <p></p>}
                 </div>
@@ -100,11 +99,16 @@ function Array(props) {
             
             while ((j > -1) && (current.props.style.height < x[j].props.style.height)) {
                 x[j+1] = x[j];
-                // x[j+1] = changeElementColor(x[j+1], 'red');
+                x[j+1] = changeElementColor(x[j+1], 'red');
+                sortHistory.push([...x]);
+
+                x[j+1] = changeElementColor(x[j+1], 'turquoise');
+                sortHistory.push([...x]);
                 j--;
             }
             x[j+1] = current;
             x[j+1] = changeElementColor(x[j+1], 'green');
+            sortHistory.push([...x]);
             sortHistory.push([...x]);
             x[j+1] = changeElementColor(x[j+1], 'turquoise');
             sortHistory.push([...x]);
@@ -129,16 +133,23 @@ function Array(props) {
     
         let tempCount = 0;
         while(i < firstHalf.length && j < secondHalf.length) {
-            // firstHalf[i] = changeElementColor(firstHalf[i], 'green');
-            // secondHalf[j] = changeElementColor(secondHalf[j], 'red');
+            firstHalf[i] = changeElementColor(firstHalf[i], 'green');
+            secondHalf[j] = changeElementColor(secondHalf[j], 'red');
+        
 
             if(firstHalf[i].props.style.height < secondHalf[j].props.style.height) {
-
-                // firstHalf[i] = changeElementColor(firstHalf[i], 'green');
+                
                 sorted.push(firstHalf[i++]);
                 outsider[passedI + (tempCount++)] = firstHalf[i - 1];
                 sortHistory.push([...outsider]);
-                // firstHalf[i] = changeElementColor(firstHalf[i - 1], 'turquoise');
+
+                firstHalf[i - 1] = changeElementColor(firstHalf[i - 1], 'turquoise');
+                secondHalf[j] = changeElementColor(secondHalf[j], 'turquoise');
+
+                outsider[passedI + (tempCount - 1)] = firstHalf[i - 1];
+                
+                sortHistory.push([...outsider]);
+                
                 
             } else {
 
@@ -146,27 +157,37 @@ function Array(props) {
                 outsider[passedI + (tempCount++)] = secondHalf[j - 1];
                 sortHistory.push([...outsider]);
 
+                firstHalf[i] = changeElementColor(firstHalf[i], 'turquoise');
+                secondHalf[j - 1] = changeElementColor(secondHalf[j - 1], 'turquoise');
+
+                outsider[passedI + (tempCount - 1)] = secondHalf[j - 1];
+
+                sortHistory.push([...outsider]);
+
             }
-            // secondHalf[j] = changeElementColor(secondHalf[j - 1], 'turquoise');
-            // firstHalf[i] = changeElementColor(firstHalf[i], 'turquoise');
-            // console.log(outsider);
         }
         while(i < firstHalf.length) {
-            // firstHalf[i] = changeElementColor(firstHalf[i], 'green');
 
             sorted.push(firstHalf[i++]);
+            firstHalf[i - 1] = changeElementColor(firstHalf[i - 1], 'green');
             outsider[passedI + (tempCount++)] = firstHalf[i - 1];
+            sortHistory.push([...outsider]);
+
+            firstHalf[i - 1] = changeElementColor(firstHalf[i - 1], 'turquoise');
+            outsider[passedI + (tempCount - 1)] = firstHalf[i - 1];
             sortHistory.push([...outsider]);
         };
         while(j < secondHalf.length) {
-            // secondHalf[j] = changeElementColor(secondHalf[j], 'green');
 
             sorted.push(secondHalf[j++]);
+            secondHalf[j - 1] = changeElementColor(secondHalf[j - 1], 'red');
             outsider[passedI + (tempCount++)] = secondHalf[j - 1];
             sortHistory.push([...outsider]);
+            
+            secondHalf[j - 1] = changeElementColor(secondHalf[j - 1], 'turquoise');
+            outsider[passedI + (tempCount - 1)] = secondHalf[j - 1];
+            sortHistory.push([...outsider]);
         };
-        // console.log(passedI, passedJ);
-        // console.log(outsider);
         return sorted;
     }
 
@@ -188,6 +209,7 @@ function Array(props) {
     }
 
     const sortIt = (chosenSort) => {
+        setClickable(false);
         sortHistory = [];
         switch(chosenSort) {
             case 'Bubble Sort':
@@ -200,7 +222,7 @@ function Array(props) {
             
             case 'Merge Sort':
                 outsider = [];
-                // outsider = [...array];
+                outsider = [...array];
                 let tempArr = [...array];
                 mergeSort(tempArr, 0, tempArr.length - 1);
                 // console.log(outsider);
@@ -219,7 +241,6 @@ function Array(props) {
     }
 
     const showHistory = () => {
-        console.log(outsider);
         let c = 0;
         if(sortHistory.length != 0) {
             interval = setInterval(() => {
@@ -238,7 +259,7 @@ function Array(props) {
         return React.cloneElement(element, {
             style: {
                 ...element.props.style,
-                backgroundColor: color
+                backgroundColor: color,
             }
         });
     }
@@ -252,7 +273,7 @@ function Array(props) {
                     <input
                         id='range'
                         type='range'
-                        min={20} max={150}
+                        min={20} max={200}
                         value={rangeVal} 
                         onChange={changeVal}
                     />
@@ -271,15 +292,12 @@ function Array(props) {
                 </div>
 
                 <button className='sort-button' style={{fontWeight: 'bold', fontSize: 25}} onClick={() => {
-                    if(clickable) {
-                        sortIt(props.chosenSort);
-                    } else {
-                        generate();
-                    }
+                    if(clickable) sortIt(props.chosenSort);
+                }}>Sort !</button>
                     
-                    }}>Sort !</button>
-                    
-                <button className='generator' onClick={generate}>Generate New Array</button>
+                <button className='generator' onClick={() => {
+                    if(clickable) generate();
+                }}>Generate New Array</button>
 
                 <button className='sort-button' onClick={() => window.location.reload()}>Reset / Stop</button>
             </div>

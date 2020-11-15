@@ -1,53 +1,28 @@
-const mergeSort = (arr, passedI, passedJ) => {
-    if(arr.length == 1) return arr;
+quick_Sort = (origArray) => {
+	if (origArray.length <= 1) { 
+		return origArray;
+	} else {
 
-    let mid = Math.floor(arr.length / 2);
-    let passedMid = Math.floor((passedI + passedJ) / 2);
+		var left = [];
+		var right = [];
+		var newArray = [];
+		var pivot = origArray.pop();
+		var length = origArray.length;
 
-    let firstHalf = mergeSort(arr.slice(0, mid), passedI, passedMid);
-    let secondHalf = mergeSort(arr.slice(mid), passedMid, passedJ);
+		for (var i = 0; i < length; i++) {
+			if (origArray[i] <= pivot) {
+				left.push(origArray[i]);
+			} else {
+				right.push(origArray[i]);
+			}
+		}
 
-    // The Merge Part
-
-    let sorted = [];
-
-    let i = 0, j = 0;
-
-    let tempCount = 0;
-    console.log(passedI, passedJ);
-    while(i < firstHalf.length && j < secondHalf.length) {
-        if(firstHalf[i] < secondHalf[j]) {
-            sorted.push(firstHalf[i++]);
-            // console.log(firstHalf[i]);
-            outsider[passedI + (tempCount++)] = firstHalf[i - 1];
-            collector.push([...outsider]);
-        } else {
-            sorted.push(secondHalf[j++]);
-            // console.log(secondHalf[j]);
-            outsider[passedI + (tempCount++)] = secondHalf[j - 1];
-            collector.push([...outsider]);
-        }
-        // console.log(outsider);
-    }
-    while(i < firstHalf.length) {
-        sorted.push(firstHalf[i++]);
-        outsider[passedI + (tempCount++)] = firstHalf[i - 1];
-        collector.push([...outsider]);
-    };
-    while(j < secondHalf.length) {
-        sorted.push(secondHalf[j++]);
-        outsider[passedI + (tempCount++)] = secondHalf[j - 1];
-        collector.push([...outsider]);
-    };
-    // console.log(passedI, passedJ);
-    // console.log(outsider);
-    return sorted;
+		return newArray.concat(quick_Sort(left), pivot, quick_Sort(right));
+	}
 }
 
-let arr = [4, 3, 2, 1];
-let collector = [];
-let outsider = [...arr]
+var myArray = [3, 0, 2, 5, -1, 4, 1 ];
 
-console.log(arr);
-console.log('\n', mergeSort(arr, 0, arr.length - 1));
-console.log('Collector: ', collector);
+console.log("Original array: " + myArray);
+var sortedArray = quick_Sort(myArray);
+console.log("Sorted array: " + sortedArray);
