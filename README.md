@@ -1,4 +1,4 @@
-## Available Scripts
+## The Visualizer
 
 You can use the visualizer on this link :)
 https://thezoraiz.github.io/React-Sorting-Algorithm-Visualizer/
