@@ -27,9 +27,11 @@ body {
 
 #range {
   width: 190px;
+  cursor: pointer;
 }
 
 #rangeSpeed {
   width: 230px;
+  cursor: pointer;
   /* transform: rotate(180deg); */
 }
