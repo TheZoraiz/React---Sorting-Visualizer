@@ -9,7 +9,6 @@ function Array(props) {
     const [ rangeVal, setVal ] = useState(20);
     const [ speed, setSpeed ] = useState(500);
     const [ clickable, setClickable ] = useState(true);
-    console.log(500 - speed);
 
     let sortHistory = [];
     let interval = undefined;
