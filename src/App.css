@@ -26,12 +26,17 @@ body {
 }
 
 #range {
-  width: 190px;
+  /* box-shadow: 0 0 5px 5px white; */
   cursor: pointer;
+  width: 190px;
+}
+
+#range:hover, #rangeSpeed:hover {
+  box-shadow: 0 0 5px 5px white;
 }
 
 #rangeSpeed {
-  width: 230px;
   cursor: pointer;
+  width: 230px;
   /* transform: rotate(180deg); */
 }
