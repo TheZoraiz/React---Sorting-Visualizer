@@ -100,8 +100,10 @@ function Array(props) {
             while ((j > -1) && (current.props.style.height < x[j].props.style.height)) {
                 x[j+1] = x[j];
                 x[j+1] = changeElementColor(x[j+1], 'red');
+                x[j] = changeElementColor(x[j], 'red');
                 sortHistory.push([...x]);
 
+                x[j] = changeElementColor(x[j], 'turquoise');
                 x[j+1] = changeElementColor(x[j+1], 'turquoise');
                 sortHistory.push([...x]);
                 j--;
