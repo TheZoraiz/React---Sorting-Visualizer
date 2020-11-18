@@ -324,7 +324,7 @@ function Array(props) {
                     <input
                         id='range'
                         type='range'
-                        min={20} max={200}
+                        min={20} max={150}
                         value={rangeVal} 
                         onChange={changeVal}
                     />
@@ -332,7 +332,7 @@ function Array(props) {
                 </div>
                 
                  <div style={{margin: '0 40px'}}>
-                    <p style={{fontSize: 17, textAlign: 'center'}}><b>Sorting Speed</b>:<br></br> Depends upon your CPU as well</p>
+                    <p style={{fontSize: 17, textAlign: 'center'}}><b>Sorting Speed</b>:<br></br> (Change before sorting)</p>
                     <input
                         id='rangeSpeed'
                         type='range'
