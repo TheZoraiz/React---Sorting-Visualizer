@@ -1,7 +1,8 @@
 import './App.css';
 import Header from  './components/Header.js'
 import Array from  './components/Array.js'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import ReactGA from "react-ga";
 
 function useForceUpdate(){
   const [value, setValue] = useState(0); // integer state
@@ -11,6 +12,11 @@ function useForceUpdate(){
 function App() {
   const [ chosenSort, setSort ] = useState('Bubble Sort');
   const [ warning, setWarning ] = useState('red')
+
+  useEffect(() => {
+    ReactGA.initialize('UA-183443755-1');
+    ReactGA.pageview('/');
+  }, [])
 
   return (
     <div className="App">
