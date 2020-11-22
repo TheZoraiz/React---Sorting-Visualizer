@@ -166,7 +166,8 @@ function Array(props) {
                 sortHistory.push([...outsider]);
 
             }
-        }
+        };
+
         while(i < firstHalf.length) {
 
             sorted.push(firstHalf[i++]);
@@ -178,6 +179,7 @@ function Array(props) {
             outsider[passedI + (tempCount - 1)] = firstHalf[i - 1];
             sortHistory.push([...outsider]);
         };
+
         while(j < secondHalf.length) {
 
             sorted.push(secondHalf[j++]);
@@ -288,11 +290,7 @@ function Array(props) {
 
         showHistory();
     }
-
-    const iterate = arr => {
-        setArray([...arr]);
-    }
-
+    
     const showHistory = () => {
         let c = 0;
         if(sortHistory.length != 0) {
@@ -303,7 +301,7 @@ function Array(props) {
                     clearInterval(interval);
                     setClickable(true);
                 }
-                iterate([...sortHistory[c]]);
+                setArray(sortHistory[c]);
             }, 500 - speed);
         }
     }

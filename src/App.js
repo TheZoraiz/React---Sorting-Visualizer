@@ -9,8 +9,7 @@ function App() {
   const [ warning, setWarning ] = useState('red')
 
   useEffect(() => {
-    ReactGA.initialize('UA-183443755-1');
-    ReactGA.pageview('/');
+    
   }, [])
 
   return (
